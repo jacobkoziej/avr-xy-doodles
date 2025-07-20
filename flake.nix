@@ -32,22 +32,31 @@
       {
         devShells.default = pkgs.mkShellNoCC (
           let
+            avr-pkgs = pkgs.pkgsCross.avr;
+
             pre-commit-bin = "${lib.getBin pkgs.pre-commit}/bin/pre-commit";
 
           in
           {
-            packages = with pkgs; [
-              commitlint-rs
-              mdformat
-              pre-commit
-              python3-pkgs
-              shfmt
-              statix
-              toml-sort
-              treefmt
-              yamlfmt
-              yamllint
-            ];
+            packages =
+              (with pkgs; [
+                commitlint-rs
+                mdformat
+                meson
+                ninja
+                pre-commit
+                python3-pkgs
+                shfmt
+                statix
+                toml-sort
+                treefmt
+                yamlfmt
+                yamllint
+              ])
+              ++ (with avr-pkgs.buildPackages; [
+                binutils
+                gcc
+              ]);
 
             shellHook = ''
               ${pre-commit-bin} install --allow-missing-config > /dev/null

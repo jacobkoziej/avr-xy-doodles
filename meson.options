@@ -1,0 +1,7 @@
+option(
+  'f_cpu',
+  type : 'integer',
+  min : 1,
+  max : 32000000,
+  value : 16000000,
+)
