@@ -40,6 +40,7 @@
           {
             packages =
               (with pkgs; [
+                clang-tools
                 commitlint-rs
                 mdformat
                 meson

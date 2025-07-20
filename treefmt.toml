@@ -1,3 +1,12 @@
+[formatter.clang-format]
+command = "clang-format"
+options = [
+  "-i",
+]
+includes = [
+  "*.c",
+]
+
 [formatter.mdformat]
 command = "mdformat"
 includes = [
@@ -34,6 +43,7 @@ command = "yamlfmt"
 includes = [
   "*.yaml",
   "*.yml",
+  ".clang-format",
 ]
 
 [formatter.yamllint]
@@ -41,6 +51,7 @@ command = "yamllint"
 includes = [
   "*.yaml",
   "*.yml",
+  ".clang-format",
 ]
 
 [global]
