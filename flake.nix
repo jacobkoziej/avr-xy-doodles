@@ -40,6 +40,7 @@
           {
             packages =
               (with pkgs; [
+                avrdude
                 clang-tools
                 commitlint-rs
                 mdformat
