@@ -13,7 +13,7 @@
 #define SHAPE_OFFSETOF(s, type) \
 	((type *) (((uintptr_t) s) - offsetof(type, shape)))
 
-typedef enum {
+typedef enum shape {
 	SHAPE_RECT,
 	SHAPE_CIRCLE,
 	SHAPE_ELLIPSE,
