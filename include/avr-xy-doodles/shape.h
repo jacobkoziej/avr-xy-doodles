@@ -1,0 +1,62 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+/*
+ * shape.h -- basic shapes
+ * Copyright (C) 2025  Jacob Koziej <jacobkoziej@gmail.com>
+ */
+
+#ifndef AVR_XY_DOODLES_SHAPE_H
+#define AVR_XY_DOODLES_SHAPE_H
+
+#include <stddef.h>
+#include <stdint.h>
+
+typedef enum {
+	SHAPE_RECT,
+	SHAPE_CIRCLE,
+	SHAPE_ELLIPSE,
+	SHAPE_LINE,
+	SHAPE_POLY,
+	SHAPE_TOTAL,
+} shape_t;
+
+typedef struct shape_rect {
+	shape_t shape;
+	uint8_t x;
+	uint8_t y;
+	uint8_t width;
+	uint8_t height;
+	uint8_t rx;
+	uint8_t ry;
+} shape_rect_t;
+
+typedef struct shape_circle {
+	shape_t shape;
+	uint8_t cx;
+	uint8_t cy;
+	uint8_t r;
+} shape_circle_t;
+
+typedef struct shape_ellipse {
+	shape_t shape;
+	uint8_t cx;
+	uint8_t cy;
+	uint8_t rx;
+	uint8_t ry;
+} shape_ellipse_t;
+
+typedef struct shape_line {
+	shape_t shape;
+	uint8_t x1;
+	uint8_t y1;
+	uint8_t x2;
+	uint8_t y2;
+} shape_line_t;
+
+typedef struct shape_poly {
+	shape_t shape;
+	bool    polygon;
+	size_t  size;
+	uint8_t points[][2];
+} shape_poly_t;
+
+#endif  // AVR_XY_DOODLES_SHAPE_H
