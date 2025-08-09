@@ -6,9 +6,11 @@
 
 #include <avr-xy-doodles/display.h>
 
+#include <stdlib.h>
+
 int main(void)
 {
 	display_init();
 
-	return 0;
+	return EXIT_SUCCESS;
 }
