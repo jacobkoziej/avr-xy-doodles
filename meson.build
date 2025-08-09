@@ -20,4 +20,6 @@ add_global_arguments(
   language : 'c',
 )
 
+avr_xy_doodles_include = include_directories('include')
+
 subdir('src')
