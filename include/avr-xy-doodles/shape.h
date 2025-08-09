@@ -19,6 +19,8 @@ typedef enum {
 	SHAPE_TOTAL,
 } shape_t;
 
+typedef uint8_t shape_point_t[2];
+
 typedef struct shape_rect {
 	shape_t shape;
 	uint8_t x;
@@ -53,10 +55,10 @@ typedef struct shape_line {
 } shape_line_t;
 
 typedef struct shape_poly {
-	shape_t shape;
-	bool    polygon;
-	size_t  size;
-	uint8_t points[][2];
+	shape_t               shape;
+	bool                  polygon;
+	size_t                size;
+	shape_point_t * const points;
 } shape_poly_t;
 
 #endif  // AVR_XY_DOODLES_SHAPE_H
