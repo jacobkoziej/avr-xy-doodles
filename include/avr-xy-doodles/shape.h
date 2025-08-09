@@ -10,6 +10,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define SHAPE_OFFSETOF(s, type) \
+	((type *) (((uintptr_t) s) - offsetof(type, shape)))
+
 typedef enum {
 	SHAPE_RECT,
 	SHAPE_CIRCLE,

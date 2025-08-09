@@ -7,6 +7,9 @@
 #ifndef AVR_XY_DOODLES_DISPLAY_H
 #define AVR_XY_DOODLES_DISPLAY_H
 
+#include <avr-xy-doodles/shape.h>
+
 void display_init(void);
+void display_shape(const shape_t * const shape);
 
 #endif  // AVR_XY_DOODLES_DISPLAY_H
