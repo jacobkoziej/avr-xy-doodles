@@ -83,6 +83,34 @@ static void draw_line(const shape_t * const shape)
 	disable_cursor();
 }
 
+static void draw_poly(const shape_t * const shape)
+{
+	const shape_poly_t * const poly = SHAPE_OFFSETOF(shape, shape_poly_t);
+
+	const size_t size = poly->size;
+
+	if (!size) return;
+
+	const size_t lines = size + poly->polygon - 1;
+
+	const shape_point_t * const points = poly->points;
+
+	for (size_t i = 0; i < lines; i++) {
+		const shape_point_t * const point1 = points + i;
+		const shape_point_t * const point2 = points + ((i + 1) % size);
+
+		const shape_line_t line = (shape_line_t) {
+			.shape = SHAPE_LINE,
+			.x1    = (*point1)[SHAPE_POINT_X],
+			.y1    = (*point1)[SHAPE_POINT_Y],
+			.x2    = (*point2)[SHAPE_POINT_X],
+			.y2    = (*point2)[SHAPE_POINT_Y],
+		};
+
+		draw_line(&line.shape);
+	}
+}
+
 static void render_pixel(const uint8_t x, const uint8_t y, const uint8_t z)
 {
 	const uint8_t portb

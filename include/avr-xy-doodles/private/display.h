@@ -54,11 +54,13 @@ static const uint8_t CHANNEL_Z_PORTC_BITS
 
 static void disable_cursor(void);
 static void draw_line(const shape_t * const shape);
+static void draw_poly(const shape_t * const shape);
 static void render_pixel(const uint8_t x, const uint8_t y, const uint8_t z);
 static bool round_subpixel(const uint8_t subpixel);
 
 static draw_shape_t * const SHAPE_TO_DRAW[SHAPE_TOTAL] = {
 	[SHAPE_LINE] = draw_line,
+	[SHAPE_POLY] = draw_poly,
 };
 
 #endif  // AVR_XY_DOODLES_PRIVATE_DISPLAY_H
