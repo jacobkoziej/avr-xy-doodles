@@ -5,6 +5,7 @@ options = [
 ]
 includes = [
   "*.c",
+  "*.h",
 ]
 
 [formatter.mdformat]
