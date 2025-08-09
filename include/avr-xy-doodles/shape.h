@@ -22,7 +22,13 @@ typedef enum {
 	SHAPE_TOTAL,
 } shape_t;
 
-typedef uint8_t shape_point_t[2];
+enum {
+	SHAPE_POINT_X,
+	SHAPE_POINT_Y,
+	SHAPE_POINT_TOTAL,
+};
+
+typedef uint8_t shape_point_t[SHAPE_POINT_TOTAL];
 
 typedef struct shape_rect {
 	shape_t shape;
