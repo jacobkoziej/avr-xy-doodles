@@ -7,7 +7,7 @@
 #include <avr/io.h>
 
 FUSES = {
-	.low	  = 0xFF,
-	.high	  = FUSE_BOOTRST & FUSE_SPIEN,
+	.low      = 0xFF,
+	.high     = FUSE_BOOTRST & FUSE_SPIEN,
 	.extended = FUSE_BODLEVEL1,
 };

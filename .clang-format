@@ -99,4 +99,4 @@ SpacesInLineCommentPrefix:
 SpacesInParens: Never
 SpacesInSquareBrackets: false
 TabWidth: 8
-UseTab: Always
+UseTab: AlignWithSpaces
