@@ -6,8 +6,10 @@
 
 #include <avr/io.h>
 
+#ifdef NDEGUB
 FUSES = {
 	.low      = 0xFF,
 	.high     = FUSE_BOOTRST & FUSE_SPIEN,
 	.extended = FUSE_BODLEVEL1,
 };
+#endif
