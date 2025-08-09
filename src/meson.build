@@ -6,6 +6,7 @@ avr_xy_doodles = executable(
     avr_xy_doodles_include,
   ],
   sources : [
+    'display.c',
     'fuses.c',
     'main.c',
   ],
