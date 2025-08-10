@@ -22,4 +22,6 @@ add_global_arguments(
 
 avr_xy_doodles_include = include_directories('include')
 
+tools = join_paths(meson.project_source_root(), 'tools')
+
 subdir('src')
