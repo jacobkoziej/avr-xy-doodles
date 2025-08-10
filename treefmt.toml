@@ -1,3 +1,9 @@
+[formatter.black]
+command = "black"
+includes = [
+  "*.py",
+]
+
 [formatter.clang-format]
 command = "clang-format"
 options = [
@@ -21,6 +27,15 @@ options = [
 ]
 includes = [
   "*.nix",
+]
+
+[formatter.ruff]
+command = "ruff"
+options = [
+  "check",
+]
+includes = [
+  "*.py",
 ]
 
 [formatter.shfmt]

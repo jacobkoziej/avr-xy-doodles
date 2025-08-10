@@ -41,6 +41,7 @@
             packages =
               (with pkgs; [
                 avrdude
+                black
                 clang-tools
                 commitlint-rs
                 mdformat
@@ -48,6 +49,7 @@
                 ninja
                 pre-commit
                 python3-pkgs
+                ruff
                 shfmt
                 statix
                 toml-sort
