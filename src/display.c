@@ -7,6 +7,7 @@
 #include <avr/io.h>
 
 #include <avr-xy-doodles/display.h>
+#include <avr-xy-doodles/fixed-point.h>
 #include <avr-xy-doodles/private/display.h>
 #include <avr-xy-doodles/shape.h>
 
@@ -44,13 +45,13 @@ static void draw_line(const shape_t * const shape)
 {
 	const shape_line_t * const line = SHAPE_OFFSETOF(shape, shape_line_t);
 
-	const point_t x1 = (point_t) {.pixel = line->x1};
-	const point_t y1 = (point_t) {.pixel = line->y1};
-	const point_t x2 = (point_t) {.pixel = line->x2};
-	const point_t y2 = (point_t) {.pixel = line->y2};
+	const ufp_t x1 = (ufp_t) {.u8 = line->x1};
+	const ufp_t y1 = (ufp_t) {.u8 = line->y1};
+	const ufp_t x2 = (ufp_t) {.u8 = line->x2};
+	const ufp_t y2 = (ufp_t) {.u8 = line->y2};
 
-	uint16_t width  = (uint16_t) (x2.pixel - x1.pixel) << 8;
-	uint16_t height = (uint16_t) (y2.pixel - y1.pixel) << 8;
+	uint16_t width  = (uint16_t) (x2.u8 - x1.u8) << 8;
+	uint16_t height = (uint16_t) (y2.u8 - y1.u8) << 8;
 
 	if (x1.u16 > x2.u16) width = -width;
 
@@ -65,16 +66,11 @@ static void draw_line(const shape_t * const shape)
 
 	if (y1.u16 > y2.u16) dy = -dy;
 
-	point_t x = x1;
-	point_t y = y1;
+	ufp_t x = x1;
+	ufp_t y = y1;
 
 	for (size_t i = 0; i < steps; i++) {
-		// clang-format off
-		render_pixel(
-			(uint8_t) (x.pixel + round_subpixel(x.subpixel)),
-			(uint8_t) (y.pixel + round_subpixel(y.subpixel)),
-			UINT8_MAX);
-		// clang-format on
+		render_pixel(ufp_round(x).u8, ufp_round(y).u8, UINT8_MAX);
 
 		x.u16 += dx;
 		y.u16 += dy;
@@ -127,9 +123,4 @@ static void render_pixel(const uint8_t x, const uint8_t y, const uint8_t z)
 	PORTC = portc;
 	PORTB = portb;
 	PORTD = portd;
-}
-
-static bool round_subpixel(const uint8_t subpixel)
-{
-	return subpixel & (1 << 7);
 }

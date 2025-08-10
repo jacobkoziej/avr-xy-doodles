@@ -18,8 +18,8 @@ avr_xy_doodles = executable(
   sources : [
     sinpi_lookup_table,
     'display.c',
+    'fixed-point.c',
     'fuses.c',
     'main.c',
-    'sinpi.c',
   ],
 )

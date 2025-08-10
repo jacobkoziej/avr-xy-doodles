@@ -16,15 +16,6 @@
 
 typedef void(draw_shape_t)(const shape_t * const);
 
-typedef union point {
-	uint16_t u16;
-
-	struct {
-		uint8_t subpixel;
-		uint8_t pixel;
-	};
-} point_t;
-
 // clang-format off
 static const uint8_t CHANNEL_X_PORTD_BITS
 	= (1 << PD0)
@@ -56,7 +47,6 @@ static void disable_cursor(void);
 static void draw_line(const shape_t * const shape);
 static void draw_poly(const shape_t * const shape);
 static void render_pixel(const uint8_t x, const uint8_t y, const uint8_t z);
-static bool round_subpixel(const uint8_t subpixel);
 
 static draw_shape_t * const SHAPE_TO_DRAW[SHAPE_TOTAL] = {
 	[SHAPE_LINE] = draw_line,
