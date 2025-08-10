@@ -9,6 +9,10 @@ tab_width                = 8
 indent_style             = tab
 indent_size              = tab
 
+[*.py]
+indent_style = space
+indent_size  = 4
+
 [*.{build,md,nix,options,toml,yml,yaml}]
 indent_style = space
 indent_size  = 2
