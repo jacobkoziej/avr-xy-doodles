@@ -31,7 +31,7 @@ enum {
 	SHAPE_POINT_TOTAL,
 };
 
-typedef uint8_t shape_point_t[SHAPE_POINT_TOTAL];
+typedef ufp_t shape_point_t[SHAPE_POINT_TOTAL];
 
 typedef struct shape_arc {
 	shape_t shape;
@@ -45,35 +45,35 @@ typedef struct shape_arc {
 
 typedef struct shape_rect {
 	shape_t shape;
-	uint8_t x;
-	uint8_t y;
-	uint8_t width;
-	uint8_t height;
-	uint8_t rx;
-	uint8_t ry;
+	ufp_t   x;
+	ufp_t   y;
+	ufp_t   width;
+	ufp_t   height;
+	ufp_t   rx;
+	ufp_t   ry;
 } shape_rect_t;
 
 typedef struct shape_circle {
 	shape_t shape;
-	uint8_t cx;
-	uint8_t cy;
-	uint8_t r;
+	ufp_t   cx;
+	ufp_t   cy;
+	ufp_t   r;
 } shape_circle_t;
 
 typedef struct shape_ellipse {
 	shape_t shape;
-	uint8_t cx;
-	uint8_t cy;
-	uint8_t rx;
-	uint8_t ry;
+	ufp_t   cx;
+	ufp_t   cy;
+	ufp_t   rx;
+	ufp_t   ry;
 } shape_ellipse_t;
 
 typedef struct shape_line {
 	shape_t shape;
-	uint8_t x1;
-	uint8_t y1;
-	uint8_t x2;
-	uint8_t y2;
+	ufp_t   x1;
+	ufp_t   y1;
+	ufp_t   x2;
+	ufp_t   y2;
 } shape_line_t;
 
 typedef struct shape_poly {

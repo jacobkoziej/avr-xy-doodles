@@ -98,10 +98,10 @@ static void draw_line(const shape_t * const shape)
 {
 	const shape_line_t * const line = SHAPE_OFFSETOF(shape, shape_line_t);
 
-	const ufp_t x1 = (ufp_t) {.u8 = line->x1};
-	const ufp_t y1 = (ufp_t) {.u8 = line->y1};
-	const ufp_t x2 = (ufp_t) {.u8 = line->x2};
-	const ufp_t y2 = (ufp_t) {.u8 = line->y2};
+	const ufp_t x1 = line->x1;
+	const ufp_t y1 = line->y1;
+	const ufp_t x2 = line->x2;
+	const ufp_t y2 = line->y2;
 
 	uint16_t width  = (uint16_t) (x2.u8 - x1.u8) << 8;
 	uint16_t height = (uint16_t) (y2.u8 - y1.u8) << 8;
