@@ -57,9 +57,21 @@ ufp_t ufp_add(const ufp_t a, const ufp_t b)
 	return FP_RAW(u, a.u16 + b.u16);
 }
 
+ufp_t ufp_div(const ufp_t a, const ufp_t b)
+{
+	const uint32_t c = (((uint32_t) a.u16) << 8) / b.u8;
+
+	return FP_RAW(u, (c >> 8) & 0xFFFF);
+}
+
 ufp_t ufp_max(const ufp_t a, const ufp_t b)
 {
 	return a.u16 > b.u16 ? a : b;
+}
+
+ufp_t ufp_min(const ufp_t a, const ufp_t b)
+{
+	return a.u16 < b.u16 ? a : b;
 }
 
 ufp_t ufp_mul(const ufp_t a, const ufp_t b)
@@ -75,4 +87,9 @@ ufp_t ufp_round(const ufp_t x)
 	const bool    round = x.f8 & (1 << 7);
 
 	return FP_INT(u, (uint8_t) (u8 + round));
+}
+
+ufp_t ufp_sub(const ufp_t a, const ufp_t b)
+{
+	return FP_RAW(u, a.u16 - b.u16);
 }

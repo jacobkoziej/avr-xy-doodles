@@ -196,6 +196,111 @@ static void draw_poly(const shape_t * const shape)
 	}
 }
 
+static void draw_rect(const shape_t * const shape)
+{
+	const shape_rect_t * const rect = SHAPE_OFFSETOF(shape, shape_rect_t);
+
+	const ufp_t width  = rect->width;
+	const ufp_t height = rect->height;
+
+	if (!width.u16) return;
+	if (!height.u16) return;
+
+	ufp_t rx = FP_INT(u, 0);
+	ufp_t ry = FP_INT(u, 0);
+
+	if (rect->rx.u16) rx = ufp_min(rect->rx, ufp_div(width, FP_INT(u, 2)));
+	if (rect->ry.u16) ry = ufp_min(rect->ry, ufp_div(width, FP_INT(u, 2)));
+
+	const ufp_t x = rect->x;
+	const ufp_t y = rect->y;
+
+	const ufp_t x1 = x;
+	const ufp_t y1 = y;
+	const ufp_t x2 = ufp_add(x, width);
+	const ufp_t y2 = ufp_add(y, height);
+
+	const ufp_t cx1 = ufp_add(x, rx);
+	const ufp_t cy1 = ufp_add(y, ry);
+	const ufp_t cx2 = ufp_sub(ufp_add(x, width), rx);
+	const ufp_t cy2 = ufp_sub(ufp_add(y, height), ry);
+
+	const shape_line_t lines[4] = {
+		[0] = {
+			.shape = SHAPE_LINE,
+			.x1 = cx1,
+			.y1 = y1,
+			.x2 = cx2,
+			.y2 = y1,
+		},
+		[1] = {
+			.shape = SHAPE_LINE,
+			.x1 = x2,
+			.y1 = cy1,
+			.x2 = x2,
+			.y2 = cy2,
+		},
+		[2] = {
+			.shape = SHAPE_LINE,
+			.x1 = cx2,
+			.y1 = y2,
+			.x2 = cx1,
+			.y2 = y2,
+		},
+		[3] = {
+			.shape = SHAPE_LINE,
+			.x1 = x1,
+			.y1 = cy2,
+			.x2 = x1,
+			.y2 = cy1,
+		},
+	};
+
+	const shape_arc_t arcs[4] = {
+		[0] = {
+			.shape = SHAPE_ARC,
+			.cx    = cx1,
+			.cy    = cy1,
+			.rx    = rx,
+			.ry    = ry,
+			.t0    = FP(i, 1.5),
+			.t1    = FP(i, 2.0),
+		},
+		[1] = {
+			.shape = SHAPE_ARC,
+			.cx    = cx2,
+			.cy    = cy1,
+			.rx    = rx,
+			.ry    = ry,
+			.t0    = FP(i, 1.0),
+			.t1    = FP(i, 1.5),
+		},
+		[2] = {
+			.shape = SHAPE_ARC,
+			.cx    = cx2,
+			.cy    = cy2,
+			.rx    = rx,
+			.ry    = ry,
+			.t0    = FP(i, 0.5),
+			.t1    = FP(i, 1.0),
+		},
+		[3] = {
+			.shape = SHAPE_ARC,
+			.cx    = cx1,
+			.cy    = cy2,
+			.rx    = rx,
+			.ry    = ry,
+			.t0    = FP(i, 0.0),
+			.t1    = FP(i, 0.5),
+		},
+	};
+
+	for (size_t i = 0; i < 4; i++) {
+		draw_arc(&arcs[i].shape);
+		draw_line(&lines[i].shape);
+	}
+}
+
 static void render_pixel(const uint8_t x, const uint8_t y, const uint8_t z)
 {
 	const uint8_t portb

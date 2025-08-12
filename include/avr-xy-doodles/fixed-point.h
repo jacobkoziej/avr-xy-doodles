@@ -41,8 +41,11 @@ ifp_t ifp_sinpi(const ifp_t x);
 ifp_t ifp_sub(const ifp_t a, const ifp_t b);
 ufp_t ifp2ufp(const ifp_t x);
 ufp_t ufp_add(const ufp_t a, const ufp_t b);
+ufp_t ufp_div(const ufp_t a, const ufp_t b);
 ufp_t ufp_max(const ufp_t a, const ufp_t b);
+ufp_t ufp_min(const ufp_t a, const ufp_t b);
 ufp_t ufp_mul(const ufp_t a, const ufp_t b);
 ufp_t ufp_round(const ufp_t x);
+ufp_t ufp_sub(const ufp_t a, const ufp_t b);
 
 #endif  // AVR_XY_DOODLES_FIXED_POINT_H
