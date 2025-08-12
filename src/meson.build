@@ -21,5 +21,6 @@ avr_xy_doodles = executable(
     'fixed-point.c',
     'fuses.c',
     'main.c',
+    'timer.c',
   ],
 )
