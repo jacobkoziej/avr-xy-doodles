@@ -10,6 +10,7 @@
 #include <avr/io.h>
 
 #include <avr-xy-doodles/display.h>
+#include <avr-xy-doodles/fixed-point.h>
 #include <avr-xy-doodles/shape.h>
 
 #include <stdint.h>
@@ -44,11 +45,13 @@ static const uint8_t CHANNEL_Z_PORTC_BITS
 // clang-format on
 
 static void disable_cursor(void);
+static void draw_arc(const shape_t * const shape);
 static void draw_line(const shape_t * const shape);
 static void draw_poly(const shape_t * const shape);
 static void render_pixel(const uint8_t x, const uint8_t y, const uint8_t z);
 
 static draw_shape_t * const SHAPE_TO_DRAW[SHAPE_TOTAL] = {
+	[SHAPE_ARC]  = draw_arc,
 	[SHAPE_LINE] = draw_line,
 	[SHAPE_POLY] = draw_poly,
 };

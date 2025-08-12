@@ -7,6 +7,8 @@
 #ifndef AVR_XY_DOODLES_SHAPE_H
 #define AVR_XY_DOODLES_SHAPE_H
 
+#include <avr-xy-doodles/fixed-point.h>
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -14,6 +16,7 @@
 	((type *) (((uintptr_t) s) - offsetof(type, shape)))
 
 typedef enum shape {
+	SHAPE_ARC,
 	SHAPE_RECT,
 	SHAPE_CIRCLE,
 	SHAPE_ELLIPSE,
@@ -29,6 +32,16 @@ enum {
 };
 
 typedef uint8_t shape_point_t[SHAPE_POINT_TOTAL];
+
+typedef struct shape_arc {
+	shape_t shape;
+	ufp_t   cx;
+	ufp_t   cy;
+	ufp_t   rx;
+	ufp_t   ry;
+	ifp_t   t0;
+	ifp_t   t1;
+} shape_arc_t;
 
 typedef struct shape_rect {
 	shape_t shape;

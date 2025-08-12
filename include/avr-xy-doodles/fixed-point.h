@@ -9,6 +9,12 @@
 
 #include <stdint.h>
 
+#define FP_(type, x)    ((type##fp_t) {.type##16 = (x)})
+#define FP(type, x)     FP_(type, (((double) (x)) * (1 << 8)))
+#define FP_RAW(type, x) FP_(type, x)
+#define FP_INT(type, x) FP_(type, (x) << 8)
+#define FP_EPS(type)    FP_(type, 1)
+
 typedef union ifp {
 	int16_t i16;
 
@@ -27,7 +33,15 @@ typedef union ufp {
 	};
 } ufp_t;
 
+ufp_t ifp_abs(const ifp_t x);
+ifp_t ifp_cospi(const ifp_t x);
+ifp_t ifp_mod(const ifp_t x, const int8_t n);
 ifp_t ifp_sinpi(const ifp_t x);
+ifp_t ifp_sub(const ifp_t a, const ifp_t b);
+ufp_t ifp2ufp(const ifp_t x);
+ufp_t ufp_add(const ufp_t a, const ufp_t b);
+ufp_t ufp_max(const ufp_t a, const ufp_t b);
+ufp_t ufp_mul(const ufp_t a, const ufp_t b);
 ufp_t ufp_round(const ufp_t x);
 
 #endif  // AVR_XY_DOODLES_FIXED_POINT_H

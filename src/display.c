@@ -41,6 +41,59 @@ static void disable_cursor(void)
 	PORTC &= (uint8_t) ~CHANNEL_Z_PORTC_BITS;
 }
 
+static void draw_arc(const shape_t * const shape)
+{
+	const shape_arc_t * const arc = SHAPE_OFFSETOF(shape, shape_arc_t);
+
+	const ufp_t rx = arc->rx;
+	const ufp_t ry = arc->ry;
+
+	const ufp_t r = ufp_max(rx, ry);
+
+	if (!r.u16) return;
+
+	const ufp_t cx = arc->cx;
+	const ufp_t cy = arc->cy;
+	const ifp_t t0 = arc->t0;
+	const ifp_t t1 = arc->t1;
+
+	ufp_t total = ifp_abs(ifp_mod(ifp_sub(t1, t0), 2));
+
+	if (!total.u16 && (t0.i16 != t1.i16))
+		total = ifp2ufp(ifp_sub(FP_INT(i, 2), FP_EPS(i)));
+
+	const size_t quadrants = total.u16 >> 7;
+
+	const ufp_t partial_r
+		= ufp_mul(FP_RAW(u, total.u16 & ((1U << 7) - 1U)), r);
+
+	const size_t steps = (r.u8 * quadrants) + ufp_round(partial_r).u8;
+
+	// Since we only draw from 0 to (2 - eps), dividing by a large
+	// steps value will yeild a dt that is too coarse. We get around
+	// this by increasing the number of fractional bits.
+	const uint8_t HD_SHIFT = 6;
+
+	const int16_t dt = (int16_t) ((total.u16 << HD_SHIFT) / steps);
+
+	int16_t t_hd = t0.i16 << HD_SHIFT;
+
+	for (size_t i = 0; i < steps; i++) {
+		const ifp_t t = FP_RAW(i, t_hd >> HD_SHIFT);
+		const ufp_t c = ifp2ufp(ifp_cospi(t));
+		const ufp_t s = ifp2ufp(ifp_sinpi(t));
+
+		const ufp_t x = ufp_add(cx, ufp_mul(rx, c));
+		const ufp_t y = ufp_add(cy, ufp_mul(ry, s));
+
+		render_pixel(ufp_round(x).u8, ufp_round(y).u8, UINT8_MAX);
+
+		t_hd += dt;
+	}
+
+	disable_cursor();
+}
+
 static void draw_line(const shape_t * const shape)
 {
 	const shape_line_t * const line = SHAPE_OFFSETOF(shape, shape_line_t);
