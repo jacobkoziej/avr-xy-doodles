@@ -17,6 +17,7 @@ add_global_arguments(
   '-fdata-sections',
   '-ffunction-sections',
   '-DF_CPU=' + get_option('f_cpu').to_string() + 'ULL',
+  '-Wno-c++-compat',
   language : 'c',
 )
 
