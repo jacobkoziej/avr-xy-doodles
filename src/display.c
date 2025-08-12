@@ -94,6 +94,24 @@ static void draw_arc(const shape_t * const shape)
 	disable_cursor();
 }
 
+static void draw_circle(const shape_t * const shape)
+{
+	const shape_circle_t * const circle
+		= SHAPE_OFFSETOF(shape, shape_circle_t);
+
+	const shape_arc_t arc = (shape_arc_t) {
+		.shape = SHAPE_ARC,
+		.cx    = circle->cx,
+		.cy    = circle->cy,
+		.rx    = circle->r,
+		.ry    = circle->r,
+		.t0    = FP_INT(i, 0),
+		.t1    = FP_INT(i, 2),
+	};
+
+	draw_arc(&arc.shape);
+}
+
 static void draw_line(const shape_t * const shape)
 {
 	const shape_line_t * const line = SHAPE_OFFSETOF(shape, shape_line_t);
