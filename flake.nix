@@ -25,6 +25,7 @@
         python3-pkgs = python3.withPackages (
           ps: with ps; [
             mdformat-simple-breaks
+            pyyaml
           ]
         );
 
