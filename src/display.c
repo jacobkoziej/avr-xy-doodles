@@ -112,6 +112,24 @@ static void draw_circle(const shape_t * const shape)
 	draw_arc(&arc.shape);
 }
 
+static void draw_ellipse(const shape_t * const shape)
+{
+	const shape_ellipse_t * const ellipse
+		= SHAPE_OFFSETOF(shape, shape_ellipse_t);
+
+	const shape_arc_t arc = (shape_arc_t) {
+		.shape = SHAPE_ARC,
+		.cx    = ellipse->cx,
+		.cy    = ellipse->cy,
+		.rx    = ellipse->rx,
+		.ry    = ellipse->ry,
+		.t0    = FP_INT(i, 0),
+		.t1    = FP_INT(i, 2),
+	};
+
+	draw_arc(&arc.shape);
+}
+
 static void draw_line(const shape_t * const shape)
 {
 	const shape_line_t * const line = SHAPE_OFFSETOF(shape, shape_line_t);

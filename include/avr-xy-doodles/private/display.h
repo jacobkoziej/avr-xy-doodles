@@ -47,15 +47,17 @@ static const uint8_t CHANNEL_Z_PORTC_BITS
 static void disable_cursor(void);
 static void draw_arc(const shape_t * const shape);
 static void draw_circle(const shape_t * const shape);
+static void draw_ellipse(const shape_t * const shape);
 static void draw_line(const shape_t * const shape);
 static void draw_poly(const shape_t * const shape);
 static void render_pixel(const uint8_t x, const uint8_t y, const uint8_t z);
 
 static draw_shape_t * const SHAPE_TO_DRAW[SHAPE_TOTAL] = {
-	[SHAPE_ARC]    = draw_arc,
-	[SHAPE_CIRCLE] = draw_circle,
-	[SHAPE_LINE]   = draw_line,
-	[SHAPE_POLY]   = draw_poly,
+	[SHAPE_ARC]     = draw_arc,
+	[SHAPE_CIRCLE]  = draw_circle,
+	[SHAPE_ELLIPSE] = draw_ellipse,
+	[SHAPE_LINE]    = draw_line,
+	[SHAPE_POLY]    = draw_poly,
 };
 
 #endif  // AVR_XY_DOODLES_PRIVATE_DISPLAY_H
