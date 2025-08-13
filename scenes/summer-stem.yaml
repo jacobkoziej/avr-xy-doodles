@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+---
+
+frames:
+  - duration: 1.0
+    doodles:
+      cooper-union:
+        x_off: 50
+        y_off: 2.5

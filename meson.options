@@ -5,3 +5,9 @@ option(
   max : 32000000,
   value : 16000000,
 )
+
+option(
+  'scene',
+  type : 'string',
+  value : 'summer-stem',
+)

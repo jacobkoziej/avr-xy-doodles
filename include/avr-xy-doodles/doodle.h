@@ -9,11 +9,16 @@
 
 #include <avr-xy-doodles/shape.h>
 
+#include <stddef.h>
 #include <stdint.h>
 
 typedef struct doodle {
-	shape_t *shapes;
-	uint32_t duration;
+	const shape_t **shapes;
+	size_t          size;
+	uint32_t        duration;
 } doodle_t;
+
+extern const doodle_t * const doodles[];
+extern const size_t           doodle_count;
 
 #endif  // AVR_XY_DOODLES_DOODLE_H

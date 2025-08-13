@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+---
+
+shapes:
+  - poly:
+      polygon: true
+      points:
+        - [0, 100]
+        - [50, 150]
+        - [100, 100]
+        - [50, 50]
+
+  - poly:
+      polygon: true
+      points:
+        - [50, 50]
+        - [100, 100]
+        - [150, 50]
+        - [100, 0]
+
+  - poly:
+      polygon: true
+      points:
+        - [0, 150]
+        - [50, 200]
+        - [100, 150]
+        - [50, 100]
+
+  - poly:
+      polygon: true
+      points:
+        - [50, 100]
+        - [100, 150]
+        - [150, 100]
+        - [100, 50]
+
+  - line:
+      x1: 0
+      y1: 100
+      x2: 0
+      y2: 150
+
+  - line:
+      x1: 50
+      y1: 150
+      x2: 50
+      y2: 200
+
+  - line:
+      x1: 100
+      y1: 100
+      x2: 100
+      y2: 150
+
+  - line:
+      x1: 150
+      y1: 50
+      x2: 150
+      y2: 100
+
+  - line:
+      x1: 100
+      y1: 0
+      x2: 100
+      y2: 50
+
+  - line:
+      x1: 50
+      y1: 50
+      x2: 50
+      y2: 100

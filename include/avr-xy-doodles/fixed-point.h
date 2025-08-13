@@ -9,12 +9,14 @@
 
 #include <stdint.h>
 
-#define FP_(type, x)     ((type##fp_t) {.type##16 = (x)})
-#define FP(type, x)      FP_(type, (((double) (x)) * (1 << 8)))
-#define FP_RAW(type, x)  FP_(type, x)
-#define FP_INT_(type, x) ((type##fp_t) {.type##8 = (x)})
-#define FP_INT(type, x)  FP_INT_(type, x)
-#define FP_EPS(type)     FP_(type, 1)
+#define FP_STATIC_(type, x) {.type##16 = (x)}
+#define FP_STATIC(type, x)  FP_STATIC_(type, (((double) (x)) * (1 << 8)))
+#define FP_(type, x)        ((type##fp_t) FP_STATIC_(type, x))
+#define FP(type, x)         FP_(type, (((double) (x)) * (1 << 8)))
+#define FP_RAW(type, x)     FP_(type, x)
+#define FP_INT_(type, x)    ((type##fp_t) {.type##8 = (x)})
+#define FP_INT(type, x)     FP_INT_(type, x)
+#define FP_EPS(type)        FP_(type, 1)
 
 typedef union ifp {
 	int16_t i16;
