@@ -127,10 +127,10 @@ class ShapeLine(Shape):
             [
                 f"static const shape_line_t shape_{id(self)} = {{",
                 "\t.shape = SHAPE_LINE,",
-                f"\t.x1    = FP_STATIC(u, {self.x1} + {self.x_off}),",
-                f"\t.y1    = FP_STATIC(u, {self.y1} + {self.y_off}),",
-                f"\t.x2    = FP_STATIC(u, ({self.x2} * {self.scale}) + {self.x_off}),",
-                f"\t.y2    = FP_STATIC(u, ({self.y2} * {self.scale}) + {self.y_off}),",
+                f"\t.x1    = FP_STATIC(u, (({self.x1} + {self.x_off}) * {self.scale})),",
+                f"\t.y1    = FP_STATIC(u, (({self.y1} + {self.y_off}) * {self.scale})),",
+                f"\t.x2    = FP_STATIC(u, (({self.x2} + {self.x_off}) * {self.scale})),",
+                f"\t.y2    = FP_STATIC(u, (({self.y2} + {self.y_off}) * {self.scale})),",
                 "};",
             ]
         )
