@@ -2,8 +2,44 @@
 ---
 
 frames:
-  - duration: 1.0
+  - duration: 2.0
     doodles:
       cooper-union:
         x_off: 50
         y_off: 2.5
+
+  - duration: 0.5
+    doodles:
+      stem-0:
+        scale: 3
+        x_off: 12.5
+        y_off: 50
+
+  - duration: 0.5
+    doodles:
+      stem-0:
+        scale: 3
+        x_off: 12.5
+        y_off: 50
+
+      stem-1:
+        scale: 3
+        x_off: 12.5
+        y_off: 25
+
+  - duration: 1.0
+    doodles:
+      stem-0:
+        scale: 3
+        x_off: 12.5
+        y_off: 50
+
+      stem-1:
+        scale: 3
+        x_off: 12.5
+        y_off: 25
+
+      stem-2:
+        scale: 3
+        x_off: 12.5
+        y_off: 0
