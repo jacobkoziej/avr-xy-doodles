@@ -43,3 +43,8 @@ frames:
         scale: 3
         x_off: 12.5
         y_off: 0
+
+  - duration: 2.0
+    doodles:
+      arduino:
+        y_off: 20
