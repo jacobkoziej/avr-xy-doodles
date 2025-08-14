@@ -7,18 +7,19 @@
 #ifndef AVR_XY_DOODLES_DOODLE_H
 #define AVR_XY_DOODLES_DOODLE_H
 
+#include <avr/pgmspace.h>
+
 #include <avr-xy-doodles/shape.h>
 
 #include <stddef.h>
 #include <stdint.h>
 
 typedef struct doodle {
-	const shape_t **shapes;
-	size_t          size;
-	uint32_t        duration;
+	const shape_t * const *shapes;
+	size_t                 size;
+	uint32_t               duration;
 } doodle_t;
 
-extern const doodle_t * const doodles[];
-extern const size_t           doodle_count;
+extern PROGMEM const doodle_t * const doodles[];
 
 #endif  // AVR_XY_DOODLES_DOODLE_H

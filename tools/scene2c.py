@@ -37,7 +37,7 @@ class ShapeArc(Shape):
     def __str__(self) -> str:
         return "\n".join(
             [
-                f"static const shape_arc_t shape_{id(self)} = {{",
+                f"static PROGMEM const shape_arc_t shape_{id(self)} = {{",
                 "\t.shape = SHAPE_ARC,",
                 f"\t.cx    = FP_STATIC(u, {self.cx} + {self.x_off}),",
                 f"\t.cy    = FP_STATIC(u, {self.cy} + {self.y_off}),",
@@ -62,7 +62,7 @@ class ShapeRect(Shape):
     def __str__(self) -> str:
         return "\n".join(
             [
-                f"static const shape_rect_t shape_{id(self)} = {{",
+                f"static PROGMEM const shape_rect_t shape_{id(self)} = {{",
                 "\t.shape  = SHAPE_RECT,",
                 f"\t.x      = FP_STATIC(u, {self.x} + {self.x_off}),",
                 f"\t.y      = FP_STATIC(u, {self.y} + {self.y_off}),",
@@ -84,7 +84,7 @@ class ShapeCircle(Shape):
     def __str__(self) -> str:
         return "\n".join(
             [
-                f"static const shape_circle_t shape_{id(self)} = {{",
+                f"static PROGMEM const shape_circle_t shape_{id(self)} = {{",
                 "\t.shape = SHAPE_CIRCLE,",
                 f"\t.cx    = FP_STATIC(u, {self.cx} + {self.x_off}),",
                 f"\t.cy    = FP_STATIC(u, {self.cy} + {self.y_off}),",
@@ -104,7 +104,7 @@ class ShapeEllipse(Shape):
     def __str__(self) -> str:
         return "\n".join(
             [
-                f"static const shape_ellipse_t shape_{id(self)} = {{",
+                f"static PROGMEM const shape_ellipse_t shape_{id(self)} = {{",
                 "\t.shape = SHAPE_ELLIPSE,",
                 f"\t.cx    = FP_STATIC(u, {self.cx} + {self.x_off}),",
                 f"\t.cy    = FP_STATIC(u, {self.cy} + {self.y_off}),",
@@ -125,7 +125,7 @@ class ShapeLine(Shape):
     def __str__(self) -> str:
         return "\n".join(
             [
-                f"static const shape_line_t shape_{id(self)} = {{",
+                f"static PROGMEM const shape_line_t shape_{id(self)} = {{",
                 "\t.shape = SHAPE_LINE,",
                 f"\t.x1    = FP_STATIC(u, (({self.x1} + {self.x_off}) * {self.scale})),",
                 f"\t.y1    = FP_STATIC(u, (({self.y1} + {self.y_off}) * {self.scale})),",
@@ -148,20 +148,21 @@ class ShapePoly(Shape):
         base_x = self.points[0][0]
         base_y = self.points[0][1]
 
-        points = ",\n".join(
+        points = "\n".join(
             [
-                f"\t\t{{\n\t\t\tFP_STATIC(u, (({x} - {base_x}) * {self.scale}) + {self.x_off} + {base_x}),\n\t\t\tFP_STATIC(u, (({y} - {base_y}) * {self.scale}) + {self.y_off} + {base_y}),\n\t\t}}"
+                f"\t{{\n\t\tFP_STATIC(u, (({x} - {base_x}) * {self.scale}) + {self.x_off} + {base_x}),\n\t\tFP_STATIC(u, (({y} - {base_y}) * {self.scale}) + {self.y_off} + {base_y}),\n\t}},"
                 for (x, y) in self.points
             ]
         )
 
         return "\n".join(
             [
-                f"static const shape_poly_t shape_{id(self)} = {{",
+                f"static PROGMEM const shape_point_t shape_points_{id(self)}[] = {{\n{points}\n}};\n",
+                f"static PROGMEM const shape_poly_t shape_{id(self)} = {{",
                 "\t.shape   = SHAPE_POLY,",
                 f"\t.polygon = {'true' if self.polygon else 'false'},",
                 f"\t.size    = {len(self.points)},",
-                f"\t.points  = (shape_point_t[]) {{\n{points}\n\t}},",
+                f"\t.points  = shape_points_{id(self)},",
                 "};",
             ]
         )
@@ -186,10 +187,10 @@ _NAME_TO_SHAPE: Final[dict[str, Shape]] = {
 def generate_c(frames: list[Frame]) -> str:
     c = "\n".join(
         [
+            "#include <avr/pgmspace.h>\n",
             "#include <avr-xy-doodles/doodle.h>",
             "#include <avr-xy-doodles/fixed-point.h>",
-            "#include <avr-xy-doodles/shape.h>",
-            "\n",
+            "#include <avr-xy-doodles/shape.h>\n",
             "#include <stddef.h>",
             "\n",
         ]
@@ -202,18 +203,18 @@ def generate_c(frames: list[Frame]) -> str:
     c += "\n\n".join(shapes)
 
     for frame in frames:
-        c += f"\n\nstatic const doodle_t doodle_{id(frame)} = {{\n\t.shapes = (const shape_t * []) {{\n"
+        c += f"\n\nstatic PROGMEM const shape_t * const doodle_shapes_{id(frame)}[] = {{\n"
         c += "\n".join(
-            [f"\t\t&shape_{id(doodle)}.shape," for doodle in frame.doodles]
+            [f"\t&shape_{id(doodle)}.shape," for doodle in frame.doodles]
         )
-        c += f"\n\t}},\n\t.size     = {len(frame.doodles)},\n"
-        c += f"\t.duration = {int(frame.duration * 1000)},\n}};"
+        c += f"\n}};\n\nstatic PROGMEM const doodle_t doodle_{id(frame)} = {{"
+        c += f"\n\t.shapes = doodle_shapes_{id(frame)},"
+        c += f"\n\t.size     = {len(frame.doodles)},"
+        c += f"\n\t.duration = {int(frame.duration * 1000)},\n}};"
 
-    c += "\n\nconst doodle_t * const doodles[] = {\n"
+    c += "\n\nPROGMEM const doodle_t * const doodles[] = {\n"
     c += "\n".join([f"\t&doodle_{id(frame)}," for frame in frames])
-    c += "\n};"
-
-    c += f"\n\nconst size_t doodle_count = {len(frames)};"
+    c += "\n\tNULL,\n};"
 
     return c
 

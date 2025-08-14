@@ -77,10 +77,10 @@ typedef struct shape_line {
 } shape_line_t;
 
 typedef struct shape_poly {
-	shape_t               shape;
-	bool                  polygon;
-	size_t                size;
-	shape_point_t * const points;
+	shape_t              shape;
+	bool                 polygon;
+	size_t               size;
+	const shape_point_t *points;
 } shape_poly_t;
 
 #endif  // AVR_XY_DOODLES_SHAPE_H
